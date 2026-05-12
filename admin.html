@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2f6f3e">
+  <title>FarmShield Admin | NTWALI BRYAN</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Inline styles so admin works even without styles.css */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f1; color: #1a2e1c; min-height: 100vh; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; background: #2f6f3e; color: #fff; position: sticky; top: 0; z-index: 100; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 700; font-size: 1.1rem; }
+    .brand-logo { height: 32px; width: 32px; object-fit: contain; }
+    .topnav { display: flex; gap: 1.5rem; }
+    .topnav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .topnav a:hover { color: #fff; }
+    .dashboard-layout { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .glass-card { background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 2px 16px rgba(47,111,62,0.08); }
+    .dashboard-hero { display: flex; flex-direction: column; gap: 1rem; background: linear-gradient(135deg, #2f6f3e, #4a9e5c); color: #fff; }
+    .eyebrow { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; margin-bottom: 0.25rem; }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .hero-text { opacity: 0.9; font-size: 0.95rem; }
+    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .analysis-chip { background: rgba(255,255,255,0.25); color: #fff; border-radius: 100px; padding: 0.3rem 0.9rem; font-size: 0.8rem; font-weight: 600; }
+    .analysis-chip.unlocked { background: #4ade80; color: #14532d; }
+    .dashboard-panel { display: flex; flex-direction: column; gap: 1rem; }
+    .results-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.75rem; }
+    .field label { font-size: 0.85rem; font-weight: 600; color: #374151; }
+    .field input { padding: 0.6rem 0.9rem; border: 1.5px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    .field input:focus { border-color: #2f6f3e; }
+    .actions { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+    .button { background: #2f6f3e; color: #fff; border: none; border-radius: 8px; padding: 0.6rem 1.4rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .button:hover { background: #245832; }
+    .button-light { background: #e8f5e9; color: #2f6f3e; }
+    .button-light:hover { background: #c8e6c9; }
+    .note { font-size: 0.8rem; color: #6b7280; margin-top: 0.5rem; }
+    .admin-dashboard { display: flex; flex-direction: column; gap: 1.5rem; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .metric-card { background: #f0f9f1; border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .metric-card span { font-size: 0.8rem; color: #6b7280; }
+    .metric-card strong { font-size: 1.5rem; color: #2f6f3e; font-weight: 700; }
+    .insight-list, .history-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .insight-item { background: #f9fafb; border-radius: 10px; padding: 0.9rem 1rem; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #2f6f3e; }
+    .insight-item .info { display: flex; flex-direction: column; gap: 0.2rem; }
+    .insight-item strong { font-size: 0.95rem; }
+    .insight-item span { font-size: 0.8rem; color: #6b7280; }
+    .badge { background: #dcfce7; color: #166534; border-radius: 100px; padding: 0.2rem 0.7rem; font-size: 0.75rem; font-weight: 600; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .empty-state { text-align: center; padding: 2rem; color: #9ca3af; font-size: 0.9rem; }
+    .error-msg { color: #dc2626; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .admin-credentials-note { background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.82rem; color: #92400e; margin-top: 0.5rem; }
+    .admin-credentials-note strong { display: block; margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body class="app-shell">
+  <header class="topbar">
+    <a class="brand brand-lockup" href="index.html">
+      <img class="brand-logo" src="farm shield ai logo.png" alt="FarmShield logo" onerror="this.style.display='none'">
+      <span>FarmShield AI</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Website</a>
+      <a href="app.html">Scanner</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-layout">
+    <section class="glass-card dashboard-hero">
+      <div>
+        <p class="eyebrow">Admin portal</p>
+        <h1>Manage FarmShield as NTWALI BRYAN</h1>
+        <p class="hero-text">View all scans, registered users, and audit history in one secure panel.</p>
+      </div>
+      <div class="hero-actions">
+        <span id="adminStateChip" class="analysis-chip">Admin access required</span>
+      </div>
+    </section>
+
+    <!-- LOGIN CARD -->
+    <section id="adminLoginCard" class="glass-card dashboard-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Admin login</p>
+          <h2>Sign in with your admin account</h2>
+        </div>
+      </div>
+      <div class="field">
+        <label for="adminEmail">Admin email</label>
+        <input id="adminEmail" type="email" placeholder="admin@farmshield.ai">
+      </div>
+      <div class="field">
+        <label for="adminPassword">Password</label>
+        <input id="adminPassword" type="password" placeholder="Admin password">
+      </div>
+      <div class="actions">
+        <button id="adminLoginBtn" class="button" type="button">Sign In</button>
+      </div>
+      <p id="adminLoginError" class="error-msg">Incorrect email or password. Try again.</p>
+      <div class="admin-credentials-note">
+        <strong>🔑 Admin credentials (for NTWALI BRYAN):</strong>
+        Email: <strong>admin@farmshield.ai</strong> &nbsp;|&nbsp; Password: <strong>Admin@2025</strong>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD (hidden until login) -->
+    <section id="adminDashboard" class="admin-dashboard" style="display:none;">
+
+      <div class="glass-card">
+        <div class="results-header">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2>FarmShield system summary</h2>
+          </div>
+        </div>
+        <div class="metric-grid" id="adminOverview"></div>
+      </div>
+
+      <section class="glass-card dashboard-panel">
+        <div class="results-header">
+          <div>
+            <p class="eyebrow">Users</p>
+            <h2>Registered accounts</h2>
+          </div>
+        </div>
+        <div id="adminUserList" class="insight-list"></div>
+      </section>
+
+      <section class="glass-card dashboard-panel">
+        <div class="results-header">
+          <div>
+            <p class="eyebrow">Saved scans</p>
+            <h2>All scan history</h2>
+          </div>
+        </div>
+        <div id="adminScanList" class="history-list"></div>
+      </section>
+
+      <section class="glass-card dashboard-panel">
+        <div class="results-header">
+          <div>
+            <p class="eyebrow">Audit events</p>
+            <h2>Recent admin activity</h2>
+          </div>
+        </div>
+        <div id="adminEventList" class="history-list"></div>
+      </section>
+
+      <div class="hero-actions" style="padding: 0;">
+        <button id="adminLogoutBtn" class="button button-light" type="button">Sign Out</button>
+        <button id="adminClearBtn" class="button button-light" type="button">Clear All Data</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ── Admin credentials ──────────────────────────────────────────
+    const ADMIN_EMAIL    = "admin@farmshield.ai";
+    const ADMIN_PASSWORD = "Admin@2025";
+
+    // ── Audit log helpers ──────────────────────────────────────────
+    function logAuditEvent(msg) {
+      const events = JSON.parse(localStorage.getItem("fs_audit") || "[]");
+      events.unshift({ msg, ts: new Date().toISOString() });
+      localStorage.setItem("fs_audit", JSON.stringify(events.slice(0, 50)));
+    }
+
+    // ── Render helpers ─────────────────────────────────────────────
+    function fmt(ts) {
+      try { return new Date(ts).toLocaleString(); } catch { return ts; }
+    }
+
+    function renderOverview() {
+      const users = JSON.parse(localStorage.getItem("fs_users") || "[]");
+      const scans = JSON.parse(localStorage.getItem("fs_scans") || "[]");
+      const chip  = document.getElementById("adminStateChip");
+      chip.textContent = "Admin access granted ✓";
+      chip.className   = "analysis-chip unlocked";
+
+      document.getElementById("adminOverview").innerHTML = `
+        <div class="metric-card"><span>Total users</span><strong>${users.length}</strong></div>
+        <div class="metric-card"><span>Total scans</span><strong>${scans.length}</strong></div>
+        <div class="metric-card"><span>Audit events</span><strong>${(JSON.parse(localStorage.getItem("fs_audit")||"[]")).length}</strong></div>
+        <div class="metric-card"><span>Admin</span><strong>NTWALI BRYAN</strong></div>
+      `;
+    }
+
+    function renderUsers() {
+      const users = JSON.parse(localStorage.getItem("fs_users") || "[]");
+      const el    = document.getElementById("adminUserList");
+      if (!users.length) { el.innerHTML = '<div class="empty-state">No registered users yet.</div>'; return; }
+      el.innerHTML = users.map(u => `
+        <div class="insight-item">
+          <div class="info">
+            <strong>${u.name || "—"}</strong>
+            <span>${u.email}</span>
+          </div>
+          <span class="badge">User</span>
+        </div>
+      `).join("");
+    }
+
+    function renderScans() {
+      const scans = JSON.parse(localStorage.getItem("fs_scans") || "[]");
+      const el    = document.getElementById("adminScanList");
+      if (!scans.length) { el.innerHTML = '<div class="empty-state">No scans saved yet.</div>'; return; }
+      el.innerHTML = scans.map(s => `
+        <div class="insight-item">
+          <div class="info">
+            <strong>${s.disease || s.diagnosis || "Unknown"}</strong>
+            <span>${s.crop || "No crop"} · ${s.farm || "No farm"} · ${fmt(s.ts || s.date || "")}</span>
+          </div>
+          <span class="badge ${(s.severity || "").toLowerCase() === "high" ? "badge-red" : ""}">${s.confidence ? s.confidence+"%" : "—"}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderAudit() {
+      const events = JSON.parse(localStorage.getItem("fs_audit") || "[]");
+      const el     = document.getElementById("adminEventList");
+      if (!events.length) { el.innerHTML = '<div class="empty-state">No audit events yet.</div>'; return; }
+      el.innerHTML = events.map(e => `
+        <div class="insight-item">
+          <div class="info">
+            <strong>${e.msg}</strong>
+            <span>${fmt(e.ts)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function showDashboard() {
+      document.getElementById("adminLoginCard").style.display = "none";
+      document.getElementById("adminDashboard").style.display = "flex";
+      renderOverview();
+      renderUsers();
+      renderScans();
+      renderAudit();
+    }
+
+    function showLogin() {
+      document.getElementById("adminLoginCard").style.display = "";
+      document.getElementById("adminDashboard").style.display = "none";
+      document.getElementById("adminStateChip").textContent = "Admin access required";
+      document.getElementById("adminStateChip").className   = "analysis-chip";
+      document.getElementById("adminEmail").value    = "";
+      document.getElementById("adminPassword").value = "";
+    }
+
+    // ── Session persistence ─────────────────────────────────────────
+    if (sessionStorage.getItem("fs_admin_logged_in") === "true") {
+      logAuditEvent("Admin session resumed");
+      showDashboard();
+    }
+
+    // ── Login ──────────────────────────────────────────────────────
+    document.getElementById("adminLoginBtn").addEventListener("click", () => {
+      const email = document.getElementById("adminEmail").value.trim().toLowerCase();
+      const pass  = document.getElementById("adminPassword").value;
+      const errEl = document.getElementById("adminLoginError");
+
+      if (email === ADMIN_EMAIL && pass === ADMIN_PASSWORD) {
+        errEl.style.display = "none";
+        sessionStorage.setItem("fs_admin_logged_in", "true");
+        logAuditEvent("Admin signed in");
+        showDashboard();
+      } else {
+        errEl.style.display = "block";
+        document.getElementById("adminPassword").value = "";
+      }
+    });
+
+    // Allow Enter key on both fields
+    ["adminEmail", "adminPassword"].forEach(id => {
+      document.getElementById(id).addEventListener("keydown", e => {
+        if (e.key === "Enter") document.getElementById("adminLoginBtn").click();
+      });
+    });
+
+    // ── Logout ─────────────────────────────────────────────────────
+    document.getElementById("adminLogoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("fs_admin_logged_in");
+      logAuditEvent("Admin signed out");
+      showLogin();
+    });
+
+    // ── Clear all data ─────────────────────────────────────────────
+    document.getElementById("adminClearBtn").addEventListener("click", () => {
+      if (!confirm("Are you sure you want to clear ALL FarmShield data? This cannot be undone.")) return;
+      ["fs_users", "fs_scans", "fs_audit"].forEach(k => localStorage.removeItem(k));
+      logAuditEvent("Admin cleared all data");
+      renderOverview();
+      renderUsers();
+      renderScans();
+      renderAudit();
+      alert("All data cleared.");
+    });
+  </script>
+</body>
+</html>

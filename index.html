@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmShield | Plant Disease Checker For Farmers</title>
+  <meta name="description" content="FarmShield helps farmers create accounts, upload crop photos, and check plant disease fast.">
+  <meta name="keywords" content="plant disease app, farm website, crop health, farmer tool, leaf scan, crop checker">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="FarmShield">
+  <meta property="og:description" content="A simple plant disease check website for farmers.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="farm%20shield%20ai%20logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page">
+  <header class="topbar shell">
+    <a class="brand brand-lockup" href="index.html">
+      <img class="brand-logo" src="farm%20shield%20ai%20logo.png" alt="FarmShield logo">
+      <span>FarmShield</span>
+    </a>
+    <nav class="nav">
+      <a href="#steps">How It Works</a>
+      <a href="#account">Account</a>
+      <a class="nav-cta" href="app.html">Open App</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero hero-slide">
+      <div class="hero-copy">
+        <div class="hero-brand">
+          <img class="hero-logo" src="farm%20shield%20ai%20logo.png" alt="FarmShield logo">
+        </div>
+        <p class="tag">Plant health made simple</p>
+        <h1>Scan crops. Spot disease. Act fast.</h1>
+        <p class="lead">FarmShield is a simple plant disease website for real farm work. Create an account, upload a crop photo, choose the signs you see, and get a fast result.</p>
+        <div class="actions">
+          <a class="button" href="app.html">Try The App</a>
+          <a class="button button-light" href="app.html?action=signup#auth">Create Account</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card">
+            <strong>29 crops</strong>
+            <span>Tomato, maize, potato, citrus and more</span>
+          </div>
+          <div class="stat-card">
+            <strong>Real account flow</strong>
+            <span>Sign up, log in, save scans</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="card section-block">
+      <div class="section-head">
+        <p class="tag">Why it feels real</p>
+        <h2>Built for real farm use</h2>
+      </div>
+      <div class="grid real-grid">
+        <article class="mini-card">
+          <strong>Account access</strong>
+          <p>Create an account, come back later, and keep your saved scan list.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Large crop list</strong>
+          <p>Use crops like tomato, maize, onion, cassava, papaya, avocado, tea, and more.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Action help</strong>
+          <p>Each result gives a likely issue, a confidence level, and a simple next step.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="steps" class="card section-block">
+      <div class="section-head">
+        <p class="tag">How it works</p>
+        <h2>Three simple steps</h2>
+      </div>
+      <div class="steps-grid">
+        <article class="step-item">
+          <span>01</span>
+          <h3>Create account</h3>
+          <p>Sign up with your name, email, and password.</p>
+        </article>
+        <article class="step-item">
+          <span>02</span>
+          <h3>Upload a plant photo</h3>
+          <p>Add a leaf image and choose the crop type.</p>
+        </article>
+        <article class="step-item">
+          <span>03</span>
+          <h3>Read the result</h3>
+          <p>See the likely disease, simple advice, and save the scan.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="account" class="card split section-block">
+      <div>
+        <p class="tag">Account</p>
+        <h2>Sign up, sign in, and save scans</h2>
+        <p class="lead-small">Create an account, return later, and keep saved scan history in your browser.</p>
+      </div>
+      <div class="account-list">
+        <a class="mini-card mini-card-link" href="app.html?action=signup#auth">
+          <strong>Sign Up</strong>
+          <p>Make a new account with your details.</p>
+        </a>
+        <a class="mini-card mini-card-link" href="app.html?action=login#auth">
+          <strong>Log In</strong>
+          <p>Return to your account any time.</p>
+        </a>
+        <a class="mini-card mini-card-link" href="app.html#history">
+          <strong>Saved Scans</strong>
+          <p>See your past disease checks in one place.</p>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>FarmShield</p>
+      <p>Plant disease checker for farmers.</p>
+    </footer>
+  </main>
+  <script>
+    const slideImages = [
+      "fam.png",
+      "farmer%20touching%20leaf.png",
+      "farmer.png",
+      "farmers%20iot.png",
+      "farming.png",
+      "farms.png"
+    ];
+
+    let currentSlide = 0;
+
+    function updateBackground() {
+      document.body.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), url("${slideImages[currentSlide]}")`;
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slideImages.length;
+      updateBackground();
+    }
+
+    updateBackground();
+    setInterval(nextSlide, 5000);
+  </script>
+</body>
+</html>

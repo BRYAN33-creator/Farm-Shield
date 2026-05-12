@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmShield App | Scan Plant</title>
+  <meta name="description" content="Sign up, log in, upload a plant photo, and check plant disease with FarmShield.">
+  <link rel="icon" type="image/png" href="farm%20shield%20ai%20logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page">
+  <header class="topbar shell">
+    <a class="brand brand-lockup" href="index.html">
+      <img class="brand-logo" src="farm%20shield%20ai%20logo.png" alt="FarmShield logo">
+      <span>FarmShield</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Website</a>
+      <a href="#auth">Account</a>
+      <a href="#scanner">Scanner</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="shell app-layout">
+    <section id="auth" class="card auth-card">
+      <p class="tag">Account</p>
+      <h2>Sign up or log in</h2>
+      <p class="lead-small">Create your account first, or log in to use your saved scan history.</p>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span id="authStateText">Not signed in</span>
+      </div>
+      <div class="field">
+        <label for="nameInput">Name</label>
+        <input id="nameInput" type="text" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="emailInput">Email</label>
+        <input id="emailInput" type="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" placeholder="Password">
+      </div>
+      <div class="actions">
+        <button id="signupBtn" class="button" type="button">Sign Up</button>
+        <button id="loginBtn" class="button button-light" type="button">Log In</button>
+        <button id="logoutBtn" class="button button-light" type="button">Log Out</button>
+      </div>
+      <p id="authText" class="note">No user signed in.</p>
+      <div class="mini-card auth-help">
+        <strong>Basic use</strong>
+        <p>Create your account once, then come back later and log in again.</p>
+      </div>
+    </section>
+
+    <section id="scanner" class="card scan-card-larger">
+      <p class="tag">Plant scanner</p>
+      <h2>Upload leaf photo</h2>
+      <p class="lead-small">Pick the crop, add a photo, mark the signs you see, then run a quick check.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="cropInput">Crop</label>
+          <input id="cropInput" list="cropList" placeholder="Tomato, maize, banana, coffee..." />
+          <datalist id="cropList">
+            <option value="Tomato"></option>
+            <option value="Maize"></option>
+            <option value="Potato"></option>
+            <option value="Citrus"></option>
+            <option value="Onion"></option>
+            <option value="Pepper"></option>
+            <option value="Beans"></option>
+            <option value="Cabbage"></option>
+            <option value="Wheat"></option>
+            <option value="Rice"></option>
+            <option value="Banana"></option>
+            <option value="Grape"></option>
+            <option value="Mango"></option>
+            <option value="Coffee"></option>
+            <option value="Cassava"></option>
+            <option value="Soybean"></option>
+            <option value="Groundnut"></option>
+            <option value="Sugarcane"></option>
+            <option value="Papaya"></option>
+            <option value="Avocado"></option>
+            <option value="Orange"></option>
+            <option value="Lemon"></option>
+            <option value="Apple"></option>
+            <option value="Pear"></option>
+            <option value="Sunflower"></option>
+            <option value="Cotton"></option>
+            <option value="Sorghum"></option>
+            <option value="Millet"></option>
+            <option value="Tea"></option>
+          </datalist>
+        </div>
+        <div class="field">
+          <label for="farmInput">Farm</label>
+          <input id="farmInput" type="text" placeholder="Local farm">
+        </div>
+        <div class="field">
+          <label for="fieldInput">Field / block</label>
+          <input id="fieldInput" type="text" placeholder="Field 1">
+        </div>
+        <div class="field">
+          <label for="imageInput">Photo</label>
+          <input id="imageInput" type="file" accept="image/*">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Plant signs</label>
+        <div class="pill-list">
+          <label class="pill"><input type="checkbox" value="brown"> Brown spots</label>
+          <label class="pill"><input type="checkbox" value="yellow"> Yellow leaf</label>
+          <label class="pill"><input type="checkbox" value="curl"> Leaf curl</label>
+          <label class="pill"><input type="checkbox" value="dark"> Dark patch</label>
+          <label class="pill"><input type="checkbox" value="dry"> Dry edge</label>
+          <label class="pill"><input type="checkbox" value="wilt"> Wilting</label>
+          <label class="pill"><input type="checkbox" value="mold"> Mold growth</label>
+          <label class="pill"><input type="checkbox" value="other"> Other symptom</label>
+        </div>
+      </div>
+
+      <div class="preview">
+        <img id="previewImage" alt="Plant preview">
+        <p id="previewText">Photo preview will show here.</p>
+      </div>
+
+      <div class="actions">
+        <button id="scanBtn" class="button" type="button">Check Disease</button>
+        <button id="printReportBtn" class="button button-light" type="button">Print Report</button>
+      </div>
+
+      <div class="result-box">
+        <p class="mini">Result</p>
+        <div class="result-head">
+          <strong id="diagnosisName">Waiting for scan</strong>
+          <span id="diagnosisLevel" class="result-pill">Basic check</span>
+        </div>
+        <p id="resultText" class="result">Add photo and signs to start.</p>
+        <div class="result-grid">
+          <div class="result-stat">
+            <span class="result-label">Confidence</span>
+            <strong id="diagnosisConfidence">0%</strong>
+          </div>
+          <div class="result-stat">
+            <span class="result-label">Crop</span>
+            <strong id="diagnosisCrop">None</strong>
+          </div>
+        </div>
+        <div class="mini-card advice-card">
+          <strong>Next step</strong>
+          <p id="diagnosisAdvice">Upload a crop photo to begin.</p>
+        </div>
+        <div class="mini-card advice-card">
+          <strong>Symptoms checked</strong>
+          <p id="diagnosisSymptoms">No signs selected yet.</p>
+        </div>
+        <div class="mini-card advice-card">
+          <strong>How to manage</strong>
+          <p id="diagnosisManagement">Scan a crop to see management recommendations.</p>
+        </div>
+        <div id="resultTags" class="result-tags"></div>
+      </div>
+    </section>
+
+    <div class="side-stack">
+      <section class="card quick-card">
+        <p class="tag">Scan tips</p>
+        <h2>Better photo, better result</h2>
+        <div class="history">
+          <div class="mini-card">
+            <strong>Use light</strong>
+            <p>Take the photo in clear daylight if possible.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Get close</strong>
+            <p>Let the leaf fill most of the photo frame.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Show the sign</strong>
+            <p>Make sure the spots or yellow areas can be seen well.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card quick-card">
+        <p class="tag">Crop list</p>
+        <h2>Many crops ready</h2>
+        <p class="lead-small">Tomato, maize, potato, onion, beans, cassava, papaya, avocado, tea, citrus, and more.</p>
+      </section>
+
+      <section id="history" class="card history-card">
+        <div class="history-card-top">
+          <div>
+            <p class="tag">History</p>
+            <h2>Saved scans</h2>
+          </div>
+          <button id="clearHistoryBtn" class="button button-light" type="button">Clear all scans</button>
+        </div>
+        <div id="historyList" class="history"></div>
+      </section>
+
+      <section class="card assistant-card">
+        <p class="tag">AI Assistant</p>
+        <h2>Ask FarmShield</h2>
+        <p class="lead-small">Get fast guidance for your crop, symptoms and next steps.</p>
+        <div class="field">
+          <label for="assistantInput">Ask a question</label>
+          <input id="assistantInput" type="text" placeholder="What should I do next?">
+        </div>
+        <div class="actions">
+          <button id="assistantAskBtn" class="button" type="button">Ask Assistant</button>
+        </div>
+        <div id="assistantResponse" class="assistant-response note">Ask a question after scanning or choosing a crop.</div>
+        <div class="mini-card auth-help">
+          <strong>Example questions</strong>
+          <div class="assistant-suggest-list">
+            <button class="assistant-suggest button button-light" type="button" data-prompt="What does this diagnosis mean?">What does this diagnosis mean?</button>
+            <button class="assistant-suggest button button-light" type="button" data-prompt="How do I manage these symptoms?">How do I manage these symptoms?</button>
+            <button class="assistant-suggest button button-light" type="button" data-prompt="Can I print a report?">Can I print a report?</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

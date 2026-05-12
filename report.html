@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2f6f3e">
+  <title>FarmShield Report | Field Summary</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-shell report-shell">
+  <header class="topbar report-topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">FS</span>
+      <span>FarmShield AI</span>
+    </a>
+    <nav class="topnav report-actions">
+      <a class="button ghost" href="dashboard.html">Back To Dashboard</a>
+      <button id="clearHistoryButton" class="button button-light" type="button">Clear saved scans</button>
+      <button id="printReportButton" class="button" type="button">Print / Save PDF</button>
+    </nav>
+  </header>
+
+  <main class="report-layout">
+    <section class="glass-card report-header-card">
+      <p class="eyebrow">Field report</p>
+      <h1>Printable disease summary</h1>
+      <p class="hero-text">
+        This report captures the current filtered dashboard view for scouting review, agronomist follow-up,
+        or farm manager handoff.
+      </p>
+      <div class="metric-grid dashboard-metrics">
+        <article class="metric-card">
+          <span>Total scans</span>
+          <strong id="reportTotalScans">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Average confidence</span>
+          <strong id="reportAverageConfidence">0%</strong>
+        </article>
+        <article class="metric-card">
+          <span>Average lesion coverage</span>
+          <strong id="reportAverageCoverage">0%</strong>
+        </article>
+        <article class="metric-card">
+          <span>Priority field</span>
+          <strong id="reportPriorityField">None yet</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-card report-header-card">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Filters used</p>
+          <h2>Scope of this report</h2>
+        </div>
+      </div>
+      <div id="reportFilterSummary" class="hero-points"></div>
+    </section>
+
+    <section class="glass-card report-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Top diseases</p>
+          <h2>Most common diagnoses</h2>
+        </div>
+      </div>
+      <div id="reportDiseaseList" class="insight-list"></div>
+    </section>
+
+    <section class="glass-card report-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Field watchlist</p>
+          <h2>Highest priority fields</h2>
+        </div>
+      </div>
+      <div id="reportFieldList" class="insight-list"></div>
+    </section>
+
+    <section class="glass-card report-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Recent records</p>
+          <h2>Included scans</h2>
+        </div>
+      </div>
+      <div id="reportScanTable" class="report-table-wrap"></div>
+    </section>
+  </main>
+
+  <script type="module" src="report.js"></script>
+</body>
+</html>

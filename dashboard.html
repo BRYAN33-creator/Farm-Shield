@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2f6f3e">
+  <title>FarmShield Dashboard | Field Trends</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">FS</span>
+      <span>FarmShield AI</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Website</a>
+      <a href="app.html">Scanner</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-layout">
+    <section class="glass-card dashboard-hero">
+      <div>
+        <p class="eyebrow">Field intelligence</p>
+        <h1>Track disease pressure by farm, field, and crop.</h1>
+        <p class="hero-text">
+          The dashboard summarizes recent scans so you can see which fields are getting worse,
+          which diseases show up most often, and where to scout next.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <a class="button" href="app.html">Run New Scan</a>
+        <a class="button ghost" href="index.html">Back To Website</a>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-summary">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Summary</p>
+          <h2>Scan overview</h2>
+        </div>
+        <span id="dashboardSourceChip" class="analysis-chip">Loading history</span>
+      </div>
+      <div class="metric-grid dashboard-metrics">
+        <article class="metric-card">
+          <span>Total scans</span>
+          <strong id="totalScansValue">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Average confidence</span>
+          <strong id="avgConfidenceValue">0%</strong>
+        </article>
+        <article class="metric-card">
+          <span>Average lesion coverage</span>
+          <strong id="avgCoverageValue">0%</strong>
+        </article>
+        <article class="metric-card">
+          <span>Highest risk field</span>
+          <strong id="highestRiskFieldValue">None yet</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-summary">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Filters</p>
+          <h2>Focus the dashboard</h2>
+        </div>
+        <div class="hero-actions">
+          <button id="openReportButton" class="button ghost" type="button">Open Report</button>
+          <button id="exportCsvButton" class="button" type="button">Export CSV</button>
+        </div>
+      </div>
+      <div class="auth-grid">
+        <label class="field-group">
+          <span>Farm</span>
+          <select id="farmFilterSelect">
+            <option value="">All farms</option>
+          </select>
+        </label>
+        <label class="field-group">
+          <span>Field</span>
+          <select id="fieldFilterSelect">
+            <option value="">All fields</option>
+          </select>
+        </label>
+        <label class="field-group">
+          <span>Disease</span>
+          <select id="diseaseFilterSelect">
+            <option value="">All diseases</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Risk profile</p>
+          <h2>Coverage and confidence bars</h2>
+        </div>
+      </div>
+      <div id="riskBarList" class="insight-list">
+        <article class="empty-state">
+          <h3>No chart data yet</h3>
+          <p>Run or sync a few scans to see trend bars.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Disease trends</p>
+          <h2>Most common diagnoses</h2>
+        </div>
+      </div>
+      <div id="diseaseTrendList" class="insight-list">
+        <article class="empty-state">
+          <h3>No trend data yet</h3>
+          <p>Run or sync a few scans to unlock disease trend analysis.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Field watchlist</p>
+          <h2>Fields needing attention</h2>
+        </div>
+      </div>
+      <div id="fieldTrendList" class="insight-list">
+        <article class="empty-state">
+          <h3>No field watchlist yet</h3>
+          <p>Run scans against named fields to build a watchlist.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-card dashboard-panel">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow">Recent activity</p>
+          <h2>Latest scans</h2>
+        </div>
+      </div>
+      <div id="recentScanList" class="history-list">
+        <article class="empty-state">
+          <h3>No recent scans</h3>
+          <p>Recent scans will appear here once the app saves history.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
